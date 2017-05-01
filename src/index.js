@@ -158,7 +158,6 @@ class nativeTest extends Component {
           onToggleAllComplete={this.handleToggleAllComplete}
         />
         <View style={styles.content}>
-          <Text>{this.state.value}</Text>
           <ListView
             style={styles.list}
             enableEmptySections
