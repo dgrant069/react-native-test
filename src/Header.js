@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
-class Header extends Component {
+class Header extends React.Component {
   render() {
     return (
       <View style={styles.header}>

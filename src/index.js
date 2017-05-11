@@ -1,12 +1,23 @@
+/**
+ * @flow
+ */
+
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import { Provider } from 'react-redux';
 
-import HomeScreen from './HomeScreen';
-import ChatScreen from './ChatScreen';
+import configureStore from './data/store';
+import AppRouter from './router';
 
-const nativeTest = StackNavigator({
-  Home: { screen: HomeScreen },
-  Chat: { screen: ChatScreen },
-});
+class nativeTest extends React.Component {
+  store = configureStore();
+
+  render() {
+    return (
+      <Provider store={this.store}>
+        <AppRouter />
+      </Provider>
+    );
+  }
+}
 
 export default nativeTest;
