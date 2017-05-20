@@ -94,29 +94,30 @@ import Row from "./Row";
 // }
 
 const TodoList = ({todoList}) => {
+  console.log("todoList component %o", todoList);
+  const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-    console.log(todoList);
-    return (
-      <View style={styles.content}>
-        <ListView
-          style={styles.list}
-          enableEmptySections
-          dataSource={todoList}
-          onScroll={() => Keyboard.dismiss()}
-          renderRow={({ key, ...value }) => {
-            return (
-              <Row
-                key={key}
-                {...value}
-              />
-            )
-          }}
-          renderSeparator={(sectionId, rowId) => {
-            return <View key={rowId} style={styles.separator}/>
-          }}
-        />
-      </View>
-    )
+  return (
+    <View style={styles.content}>
+      <ListView
+        style={styles.list}
+        enableEmptySections
+        dataSource={ds.cloneWithRows(todoList)}
+        onScroll={() => Keyboard.dismiss()}
+        renderRow={({ key, ...value }) => {
+          return (
+            <Row
+              key={key}
+              {...value}
+            />
+          )
+        }}
+        renderSeparator={(sectionId, rowId) => {
+          return <View key={rowId} style={styles.separator}/>
+        }}
+      />
+    </View>
+  )
 };
 
 // HomeScreen.propTypes = {

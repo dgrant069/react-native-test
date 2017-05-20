@@ -22,18 +22,7 @@ const filterItems = (filter, items) => {
 class HomeScreen extends React.Component {
   buildDS = () => {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return ds.cloneWithRows([
-      {
-        key: "akjsdflasjg",
-        name: "Fart",
-        completed: false
-      },
-      {
-        key: "lkjgoijoa",
-        name: "Poop",
-        completed: false
-      }
-    ]);
+    return ds.cloneWithRows(this.props.todoList);
   }
 
   updateDS = () => {
@@ -163,7 +152,8 @@ class HomeScreen extends React.Component {
           style={styles.btn}
         />
         <TodoList
-          todoList={this.state.dataSource}/>
+          todoList={this.props.todoList}
+          dataSource={this.props.dataSource}/>
         <View style={styles.content}>
           <ListView
             style={styles.list}
@@ -206,13 +196,12 @@ class HomeScreen extends React.Component {
 
 HomeScreen.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  todoList: PropTypes.array.isRequired
+  todoList: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => {
-  console.log("HOME reducer state", state);
   return {
-    todoList: state.todoList,
+    todoList: state.todoList
   }
 };
 
