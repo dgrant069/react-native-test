@@ -92,10 +92,10 @@ import Row from "./Row";
 //     )
 //   }
 // }
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 const TodoList = ({todoList}) => {
   console.log("todoList component %o", todoList);
-  const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
   return (
     <View style={styles.content}>
@@ -119,15 +119,6 @@ const TodoList = ({todoList}) => {
     </View>
   )
 };
-
-// HomeScreen.propTypes = {
-//   dispatch: PropTypes.func.isRequired,
-//   todos: PropTypes.array
-// };
-//
-// const mapStateToProps = state => ({
-//   todos: state.todosReducer,
-// });
 
 const styles = StyleSheet.create({
   content: {

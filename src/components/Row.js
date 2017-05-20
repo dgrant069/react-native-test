@@ -6,7 +6,7 @@ class Row extends Component {
     const { complete } = this.props;
     const textComponent = (
       <TouchableOpacity style={styles.textWrap} onLongPress={() => this.props.onToggleEdit(true)}>
-        <Text style={[styles.text, complete && styles.complete]}>{this.props.text}</Text>
+        <Text style={[styles.name, complete && styles.complete]}>{this.props.name}</Text>
       </TouchableOpacity>
     )
     const removeButton = (
@@ -20,7 +20,7 @@ class Row extends Component {
         <TextInput
           onChangeText={this.props.onUpdate}
           autoFocus
-          value={this.props.text}
+          value={this.props.name}
           style={styles.input}
           multiline
         />
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   complete: {
     textDecorationLine: "line-through"
   },
-  text: {
+  name: {
     fontSize: 24,
     color: "#4d4d4d",
   },

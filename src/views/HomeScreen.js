@@ -20,53 +20,35 @@ const filterItems = (filter, items) => {
 }
 
 class HomeScreen extends React.Component {
-  buildDS = () => {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return ds.cloneWithRows(this.props.todoList);
-  }
-
-  updateDS = () => {
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this.props.todoList),
-    })
-  }
-
   state = {
     loading: true,
     allComplete: false,
     filter: "ALL",
     value: "",
-    items: [],
-    dataSource: this.buildDS()
+    items: []
   }
 
   componentWillMount() {
-    const addThis = [
-      {
-        key: "akjsdflasjg",
-        name: "Fart",
-        completed: false
-      },
-      {
-        key: "lkjgoijoa",
-        name: "Poop",
-        completed: false
-      }
-    ]
-
-    AsyncStorage.setItem("todoList", JSON.stringify(addThis));
-
+    // const addThis = [
+    //   {
+    //     key: "akjsdflasjg",
+    //     name: "Fart",
+    //     completed: false
+    //   },
+    //   {
+    //     key: "lkjgoijoa",
+    //     name: "Poop",
+    //     completed: false
+    //   }
+    // ]
+    //
+    // AsyncStorage.setItem("todoList", JSON.stringify(addThis));
+    //
     this.props.dispatch(fetchTodos());
     this.setState({
       loading: false
     })
-    // this.updateDS();
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   this.updateDS();
-  //   console.log("nextProps", nextProps);
-  // }
 
   handleUpdateText(key, text) {
     const newItems = this.state.items.map((item) => {
@@ -154,29 +136,6 @@ class HomeScreen extends React.Component {
         <TodoList
           todoList={this.props.todoList}
           dataSource={this.props.dataSource}/>
-        <View style={styles.content}>
-          <ListView
-            style={styles.list}
-            enableEmptySections
-            dataSource={this.state.dataSource}
-            onScroll={() => Keyboard.dismiss()}
-            renderRow={({ key, ...value}) => {
-              return (
-                <Row
-                  key={key}
-                  onUpdate={(text) => this.handleUpdateText(key, text)}
-                  onToggleEdit={(editing) => this.handleToggleEditing(key, editing)}
-                  onRemove={() => this.handleRemoveItem(key)}
-                  onComplete={(complete) => this.handleToggleComplete(key, complete)}
-                  {...value}
-                />
-              )
-            }}
-            renderSeparator={(sectionId, rowId) => {
-              return <View key={rowId} style={styles.separator}/>
-            }}
-          />
-        </View>
         <Footer
           count={filterItems("ACTIVE", this.state.items).length}
           onFilter={this.handleFilter}
