@@ -4,11 +4,9 @@ import { addNavigationHelpers } from 'react-navigation'
 
 import { AppNavigator } from './configs/router';
 
-const AppRouter = ({ dispatch, routing }) => {
-  console.log("state in router", routing);
-  return (
+const AppRouter = ({ dispatch, routing }) => (
   <AppNavigator navigation={addNavigationHelpers({dispatch, state: routing })} />
-)}
+)
 
 AppRouter.propTypes = {
   dispatch: PropTypes.func.isRequired,
