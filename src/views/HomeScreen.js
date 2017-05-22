@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Row from "../components/Row";
-import TodoList from "../components/TodoList";
+import TodosList from "../components/TodosList";
 
 import css from './HomeScreen.css';
 
@@ -29,47 +29,10 @@ class HomeScreen extends React.Component {
   }
 
   componentWillMount() {
-    const addThis = [
-      {
-        key: "09ijlkasn84",
-        name: "Test",
-        completed: false
-      },
-      {
-        key: "oizunv9434g",
-        name: "?????",
-        completed: false
-      }
-    ]
-
-    AsyncStorage.setItem("todosList", JSON.stringify(addThis));
-
-    this.props.dispatch(fetchTodos());
     this.setState({
       loading: false
     })
-  }
-
-  handleUpdateText(key, text) {
-    const newItems = this.state.items.map((item) => {
-      if (item.key !== key) return item;
-      return {
-        ...item,
-        text
-      }
-    })
-    // this.setSource(newItems, filterItems(this.state.filter, newItems));
-  }
-
-  handleToggleEditing(key, editing) {
-    const newItems = this.state.items.map((item) => {
-      if (item.key !== key) return item;
-      return {
-        ...item,
-        editing
-      }
-    })
-    // this.setSource(newItems, filterItems(this.state.filter, newItems));
+    return this.props.dispatch(fetchTodos());
   }
 
   // setSource(items, itemsDatasource, otherState = {}) {
@@ -90,13 +53,6 @@ class HomeScreen extends React.Component {
     // this.setSource(this.state.items, filterItems(filter, this.state.items), { filter })
   }
 
-  handleRemoveItem(key) {
-    const newItems = this.state.items.filter((item) => {
-      return item.key !== key
-    })
-    // this.setSource(newItems, filterItems(this.state.filter, newItems));
-  }
-
   handleToggleComplete(key, complete) {
     const newItems = this.state.items.map((item) => {
       if (item.key !== key) return item;
@@ -106,19 +62,6 @@ class HomeScreen extends React.Component {
       }
     })
     // this.setSource(newItems, filterItems(this.state.filter, newItems));
-  }
-
-  handleAddItem() {
-    if (!this.state.value) return;
-    const newItems = [
-      ...this.state.items,
-      {
-        key: Date.now(),
-        text: this.state.value,
-        complete: false
-      }
-    ]
-    // this.setSource(newItems, filterItems(this.state.filter, newItems), { value: "" })
   }
 
   render() {
@@ -133,7 +76,7 @@ class HomeScreen extends React.Component {
           title="Chat with Lucy"
           style={styles.btn}
         />
-        <TodoList
+        <TodosList
           todosList={this.props.todosList}
           dataSource={this.props.dataSource}/>
         <Footer
@@ -165,7 +108,4 @@ const mapStateToProps = state => {
 };
 
 const styles = StyleSheet.create(css);
-
-// export default connect(mapStateToProps)(HomeScreen)
-
 export default connect(mapStateToProps)(HomeScreen);

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { addTodo } from '../data/actions/todos';
 
+import css from './Header.css';
+
 class Header extends React.Component {
   state = {
     value: ""
@@ -13,7 +15,7 @@ class Header extends React.Component {
     this.setState({
       value: ""
     })
-    
+
     return this.props.dispatch(addTodo(this.props.todosList, todoName));
   }
 
@@ -34,7 +36,7 @@ class Header extends React.Component {
           returnKeyType="done"
           style={styles.input}
         />
-        <View style={styles.btnContainer}>
+        <View>
           <Button
             onPress={() => this.handleAddItem(this.state.value)}
             title="Add"
@@ -49,33 +51,5 @@ Header.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
-const styles = StyleSheet.create({
-  header: {
-    paddingHorizontal: 16,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center"
-  },
-  toggleIcon: {
-    fontSize: 30,
-    color: "#CCC"
-  },
-  input: {
-    flex: 1,
-    marginLeft: 16,
-    height: 50
-  },
-  btnContainer: {
-    borderWidth: 5,
-    borderColor: '#e20d0d',
-    borderStyle: 'solid',
-    backgroundColor: '#e20d0d',
-    borderRadius: 5
-  },
-  btn: {
-    padding: 8,
-    width: 80,
-  }
-})
-
+const styles = StyleSheet.create(css);
 export default connect()(Header);

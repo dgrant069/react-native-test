@@ -12,6 +12,11 @@ export const todosReducer = (state = [], action) => {
         ...state,
         action.todoObj
       ];
+    case 'REMOVE_TODO_SUCCESS':
+      const newTodosListState = state.filter((item) => {
+        return item.key !== action.todoKey
+      })
+      return newTodosListState;
     case action.MARK_TODO_COMPLETE:
       var index = _.findIndex(state, (todo) => todo.id === action.id);
       if (index === -1) {

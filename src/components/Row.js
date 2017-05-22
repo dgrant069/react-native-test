@@ -1,16 +1,24 @@
-import React, { Component } from "react";
+import React, { PropTypes } from "react";
 import { View, Text, StyleSheet, Switch, TouchableOpacity, TextInput } from "react-native";
+import { connect } from 'react-redux';
 
-class Row extends Component {
+import css from './Row.css';
+
+import { deleteTodo } from '../data/actions/todos';
+
+// const Row = () => {
+class Row extends React.Component {
   render() {
     const { complete } = this.props;
+    console.log("row this.props %o", this);
     const textComponent = (
       <TouchableOpacity style={styles.textWrap} onLongPress={() => this.props.onToggleEdit(true)}>
         <Text style={[styles.name, complete && styles.complete]}>{this.props.name}</Text>
       </TouchableOpacity>
     )
+
     const removeButton = (
-      <TouchableOpacity onPress={this.props.onRemove}>
+      <TouchableOpacity onPress={this.props.removeTodo}>
         <Text style={styles.destroy}>X</Text>
       </TouchableOpacity>
     )
@@ -46,45 +54,5 @@ class Row extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between"
-  },
-  input: {
-    height: 100,
-    flex: 1,
-    fontSize: 24,
-    padding: 0,
-    color: "#4d4d4d"
-  },
-  textWrap: {
-    flex: 1,
-    marginHorizontal: 10,
-  },
-  done: {
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#7be290",
-    padding: 7
-  },
-  doneText: {
-    color: "#4d4d4d",
-    fontSize: 20
-  },
-  complete: {
-    textDecorationLine: "line-through"
-  },
-  name: {
-    fontSize: 24,
-    color: "#4d4d4d",
-  },
-  destroy: {
-    fontSize: 20,
-    color: "#cc9a9a"
-  }
-})
-
+const styles = StyleSheet.create(css);
 export default Row;
