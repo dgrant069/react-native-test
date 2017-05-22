@@ -10,7 +10,11 @@ class Header extends React.Component {
   }
 
   handleAddItem(todoName) {
-    return this.props.dispatch(addTodo(this.props.todoList, todoName));
+    this.setState({
+      value: ""
+    })
+    
+    return this.props.dispatch(addTodo(this.props.todosList, todoName));
   }
 
   handleChange(value) {

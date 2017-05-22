@@ -29,21 +29,21 @@ class HomeScreen extends React.Component {
   }
 
   componentWillMount() {
-    // const addThis = [
-    //   {
-    //     key: "akjsdflasjg",
-    //     name: "Fart",
-    //     completed: false
-    //   },
-    //   {
-    //     key: "lkjgoijoa",
-    //     name: "Poop",
-    //     completed: false
-    //   }
-    // ]
-    //
-    // AsyncStorage.setItem("todoList", JSON.stringify(addThis));
-    //
+    const addThis = [
+      {
+        key: "09ijlkasn84",
+        name: "Test",
+        completed: false
+      },
+      {
+        key: "oizunv9434g",
+        name: "?????",
+        completed: false
+      }
+    ]
+
+    AsyncStorage.setItem("todosList", JSON.stringify(addThis));
+
     this.props.dispatch(fetchTodos());
     this.setState({
       loading: false
@@ -127,14 +127,14 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Header
-          todoList={this.props.todoList}/>
+          todosList={this.props.todosList}/>
         <Button
           onPress={() => navigate('Chat', { user: 'Lucy' })}
           title="Chat with Lucy"
           style={styles.btn}
         />
         <TodoList
-          todoList={this.props.todoList}
+          todosList={this.props.todosList}
           dataSource={this.props.dataSource}/>
         <Footer
           count={filterItems("ACTIVE", this.state.items).length}
@@ -155,12 +155,12 @@ class HomeScreen extends React.Component {
 
 HomeScreen.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  todoList: PropTypes.array.isRequired,
+  todosList: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => {
   return {
-    todoList: state.todoList
+    todosList: state.todosList
   }
 };
 

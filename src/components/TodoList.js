@@ -7,7 +7,7 @@ import Row from "./Row";
 // class TodoList extends React.Component {
 //   buildDS = () => {
 //     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-//     return ds.cloneWithRows(this.props.todoList);
+//     return ds.cloneWithRows(this.props.todosList);
 //   }
 //
 //   state = {
@@ -94,15 +94,15 @@ import Row from "./Row";
 // }
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-const TodoList = ({todoList}) => {
-  console.log("todoList component %o", todoList);
+const TodoList = ({todosList}) => {
+  console.log("todosList component %o", todosList);
 
   return (
     <View style={styles.content}>
       <ListView
         style={styles.list}
         enableEmptySections
-        dataSource={ds.cloneWithRows(todoList)}
+        dataSource={ds.cloneWithRows(todosList)}
         onScroll={() => Keyboard.dismiss()}
         renderRow={({ key, ...value }) => {
           return (

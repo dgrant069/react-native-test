@@ -5,10 +5,10 @@ import { fetchFromStorage, saveToStorage } from '../api/localStorage';
 
 const fetchTodosSuccess = (todosData) => {
   if(!todosData) {
-    return {type: actions.FECTH_TODOLIST_SUCCESS, todoList: []};
+    return {type: actions.FECTH_TODOLIST_SUCCESS, todosList: []};
   }
 
-  return {type: actions.FECTH_TODOLIST_SUCCESS, todoList: todosData};
+  return {type: actions.FECTH_TODOLIST_SUCCESS, todosList: todosData};
 };
 
 const addTodoSuccess = (todoObj) => {
@@ -17,7 +17,7 @@ const addTodoSuccess = (todoObj) => {
 
 export const fetchTodos = () => (dispatch) => {
   // make async call to api, handle promise, dispatch action when promise is resolved
-  return fetchFromStorage('todoList').then(todosData => {
+  return fetchFromStorage('todosList').then(todosData => {
     try {
       const items = JSON.parse(todosData);
       dispatch(fetchTodosSuccess(items));
@@ -42,26 +42,22 @@ const throwError = (error) => {
   console.error("EEEERRRRROOOOOOORRRRR", error);
 }
 
-export const addTodo = (prevTodos = [], newTodo) => (dispatch) => {
+export const addTodo = (prevTodosList = [], newTodo) => (dispatch) => {
   const id = uuid().toString();
   const todoObj = {
-    todo: {
-      key: id,
-      name: newTodo,
-      completed: false
-    }
+    key: id,
+    name: newTodo,
+    completed: false
   };
 
-  const todosArray = prevTodos.map(() => {
+  const newTodosList = () => {
     return [
-      ...prevTodos,
+      ...prevTodosList,
       todoObj
     ];
-  });
+  };
 
-  console.log("todoObj", todoObj)
-  console.log("todosArray", todosArray)
-  return saveToStorage('todoList', todosArray).then(() => {
+  return saveToStorage('todosList', newTodosList()).then((response) => {
     dispatch(addTodoSuccess(todoObj));
   }).catch(e => {
     dispatch(throwError(e));

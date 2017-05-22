@@ -5,12 +5,12 @@ export const todosReducer = (state = [], action) => {
     case 'FECTH_TODOLIST_SUCCESS':
       return [
         ...state,
-        ...action.todoList
+        ...action.todosList
       ]
     case 'ADD_TODO_SUCCESS':
       return [
         ...state,
-        action.todo
+        action.todoObj
       ];
     case action.MARK_TODO_COMPLETE:
       var index = _.findIndex(state, (todo) => todo.id === action.id);
