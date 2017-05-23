@@ -12,11 +12,20 @@ export const todosReducer = (state = [], action) => {
         ...state,
         action.todoObj
       ];
-    case 'REMOVE_TODO_SUCCESS':
-      const newTodosListState = state.filter((item) => {
-        return item.key !== action.todoKey
+    case 'EDIT_TODO_SUCCESS':
+      const newListStateEdit = state.map((todo) => {
+        if (todo.key !== action.todoKey) return todo;
+        return {
+          ...todo,
+          name: action.todoName
+        }
       })
-      return newTodosListState;
+      return newListStateEdit;
+    case 'REMOVE_TODO_SUCCESS':
+      const newListStateRemove = state.filter((todo) => {
+        return todo.key !== action.todoKey
+      })
+      return newListStateRemove;
     case action.MARK_TODO_COMPLETE:
       var index = _.findIndex(state, (todo) => todo.id === action.id);
       if (index === -1) {

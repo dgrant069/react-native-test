@@ -55,14 +55,13 @@ class HomeScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    console.log("this.props in homescreen", this.props);
     return (
       <View style={styles.container}>
         <Header
           todosList={this.props.todosList}/>
         <Button
-          onPress={() => navigate('Chat', { user: 'Lucy' })}
-          title="Chat with Lucy"
+          onPress={() => navigate('Chat', { user: 'Siri' })}
+          title="Chat with Siri"
           style={styles.btn}
         />
         <TodosList
@@ -84,6 +83,13 @@ class HomeScreen extends React.Component {
     );
   }
 }
+
+////
+// handleClearComplete() {
+//   const newItems = filterItems("ACTIVE", this.state.items);
+//   this.setSource(newItems, filterItems(this.state.filter, newItems));
+// }
+//
 
 HomeScreen.propTypes = {
   dispatch: PropTypes.func.isRequired,

@@ -6,7 +6,7 @@ import Row from "./Row";
 
 import css from './TodosList.css';
 
-import { deleteTodo } from '../data/actions/todos';
+import { deleteTodo, editTodo } from '../data/actions/todos';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -15,40 +15,23 @@ class TodosList extends React.Component {
     return this.props.dispatch(deleteTodo(this.props.todosList, key));
   }
 
-  handleUpdateText = (key, text) => {
-    const newItems = this.state.items.map((item) => {
-      if (item.key !== key) return item;
-      return {
-        ...item,
-        text
-      }
-    })
-    return this.props.dispatch(deleteTodo(this.props.todosList, key));
-  }
-
-  handleToggleEditing = (key, editing) => {
-    const newItems = this.state.items.map((item) => {
-      if (item.key !== key) return item;
-      return {
-        ...item,
-        editing
-      }
-    })
-    return this.props.dispatch(deleteTodo(this.props.todosList, key));
+  handleUpdateText = (key, name) => {
+    return this.props.dispatch(editTodo(this.props.todosList, key, name));
   }
 
   handleToggleComplete = (key, complete) => {
-    const newItems = this.state.items.map((item) => {
-      if (item.key !== key) return item;
-      return {
-        ...item,
-        complete
-      }
-    })
-    return this.props.dispatch(deleteTodo(this.props.todosList, key));
+    // const newItems = this.state.items.map((item) => {
+    //   if (item.key !== key) return item;
+    //   return {
+    //     ...item,
+    //     complete
+    //   }
+    // })
+    // return this.props.dispatch(deleteTodo(this.props.todosList, key));
   }
 
   render(){
+    console.log("the todosList %o", this.props.todosList);
     return (
       <View style={styles.content}>
         <ListView
@@ -60,8 +43,7 @@ class TodosList extends React.Component {
             return (
               <Row
                 todoId={key}
-                onUpdate={(text) => this.handleUpdateText(key, text)}
-                onToggleEdit={(editing) => this.handleToggleEditing(key, editing)}
+                onUpdateSave={(name) => this.handleUpdateText(key, name)}
                 onComplete={(complete) => this.handleToggleComplete(key, complete)}
                 removeTodo={() => this.removeTodo(key)}
                 {...value}

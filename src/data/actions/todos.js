@@ -18,6 +18,10 @@ const addTodoSuccess = (todoObj) => {
   return {type: actions.ADD_TODO_SUCCESS, todoObj}
 }
 
+const editTodoSuccess = (todoKey, todoName) => {
+  return {type: actions.EDIT_TODO_SUCCESS, todoKey, todoName}
+}
+
 const removeTodoSuccess = (todoKey) => {
   return {type: actions.REMOVE_TODO_SUCCESS, todoKey}
 }
@@ -36,7 +40,7 @@ export const fetchTodos = () => (dispatch) => {
   });
 };
 
-export const addTodo = (prevTodosList = [], newTodo) => (dispatch) => {
+export const addTodo = (prevTodosList = [], newTodo) => {
   const id = uuid().toString();
   const todoObj = {
     key: id,
@@ -51,23 +55,28 @@ export const addTodo = (prevTodosList = [], newTodo) => (dispatch) => {
     ];
   };
 
-  return saveToStorage('todosList', newTodosList()).then(() => {
-    dispatch(addTodoSuccess(todoObj));
-  }).catch(e => {
-    dispatch(throwError(e));
-  });
+  return setStorage('todosList', newTodosList(), addTodoSuccess(todoObj));
 }
 
-export const deleteTodo = (prevTodosList, todoKey) => (dispatch) => {
+export const editTodo = (prevTodosList, todoKey, name) => {
+  const newTodosList = prevTodosList.map((todo) => {
+    if (todo.key !== todoKey) return todo;
+
+    return {
+      ...todo,
+      name
+    }
+  })
+
+  return setStorage('todosList', newTodosList, editTodoSuccess(todoKey, name));
+}
+
+export const deleteTodo = (prevTodosList, todoKey) => {
   const newTodosList = prevTodosList.filter((item) => {
     return item.key !== todoKey
   })
 
-  return saveToStorage('todosList', newTodosList).then(() => {
-    dispatch(removeTodoSuccess(todoKey));
-  }).catch(e => {
-    dispatch(throwError(e));
-  });
+  return setStorage('todosList', newTodosList, removeTodoSuccess(todoKey));
 }
 
 export const completeTodo = (id) => (
@@ -79,3 +88,11 @@ export const incompleteTodo = (id) => (
   type: actions.MARK_TODO_INCOMPLETE,
   key: id
 )
+
+const setStorage = (name, list, successFunc) => (dispatch) => {
+  return saveToStorage(name, list).then(() => {
+    dispatch(successFunc);
+  }).catch(e => {
+    dispatch(throwError(e));
+  });
+}

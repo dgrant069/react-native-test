@@ -8,11 +8,36 @@ import { deleteTodo } from '../data/actions/todos';
 
 // const Row = () => {
 class Row extends React.Component {
+  state = {
+    name: "",
+    editing: false
+  }
+
+  componentWillMount() {
+    return this.setState({name: this.props.name})
+  }
+
+  handleChange(name) {
+    return this.setState({name});
+  }
+
+  isEditing = (bool) => {
+    return this.setState({
+      editing: bool
+    })
+  }
+
+  saveUpdatedName = () => {
+    this.props.onUpdateSave(this.state.name);
+    this.isEditing(false);
+  }
+
   render() {
     const { complete } = this.props;
     console.log("row this.props %o", this);
+
     const textComponent = (
-      <TouchableOpacity style={styles.textWrap} onLongPress={() => this.props.onToggleEdit(true)}>
+      <TouchableOpacity style={styles.textWrap} onLongPress={() => this.isEditing(true)}>
         <Text style={[styles.name, complete && styles.complete]}>{this.props.name}</Text>
       </TouchableOpacity>
     )
@@ -26,9 +51,9 @@ class Row extends React.Component {
     const editingComponent = (
       <View style={styles.textWrap}>
         <TextInput
-          onChangeText={this.props.onUpdate}
+          onChangeText={(name) => this.handleChange(name)}
           autoFocus
-          value={this.props.name}
+          value={this.state.name}
           style={styles.input}
           multiline
         />
@@ -36,7 +61,7 @@ class Row extends React.Component {
     )
 
     const doneButton = (
-      <TouchableOpacity style={styles.done} onPress={() => this.props.onToggleEdit(false)}>
+      <TouchableOpacity style={styles.done} onPress={() => this.saveUpdatedName()}>
         <Text style={styles.doneText}>Save</Text>
       </TouchableOpacity>
     )
@@ -47,8 +72,8 @@ class Row extends React.Component {
           value={complete}
           onValueChange={this.props.onComplete}
         />
-        {this.props.editing ? editingComponent : textComponent}
-        {this.props.editing ? doneButton : removeButton}
+        {this.state.editing ? editingComponent : textComponent}
+        {this.state.editing ? doneButton : removeButton}
       </View>
     );
   }

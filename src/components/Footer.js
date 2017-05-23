@@ -29,6 +29,14 @@ class Footer extends Component {
     );
   }
 }
+// handleToggleAllComplete() {
+//   const complete = !this.state.allComplete;
+//   const newItems = this.state.items.map((item) => ({
+//     ...item,
+//     complete
+//   }))
+//   this.setSource(newItems, filterItems(this.state.filter, newItems), { allComplete: complete })
+// }
 
 const styles = StyleSheet.create(css);
 export default Footer;
