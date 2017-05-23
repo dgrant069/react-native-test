@@ -14,16 +14,8 @@ const fetchTodosSuccess = (todosData) => {
   return {type: actions.FECTH_TODOLIST_SUCCESS, todosList: todosData};
 };
 
-const addTodoSuccess = (todoObj) => {
-  return {type: actions.ADD_TODO_SUCCESS, todoObj}
-}
-
-const editTodoSuccess = (todoKey, todoName) => {
-  return {type: actions.EDIT_TODO_SUCCESS, todoKey, todoName}
-}
-
-const removeTodoSuccess = (todoKey) => {
-  return {type: actions.REMOVE_TODO_SUCCESS, todoKey}
+const dispatchUpdateSuccess = (sucessAction, todoObj) => {
+  return {type: actions[sucessAction], todoObj}
 }
 
 export const fetchTodos = () => (dispatch) => {
@@ -43,7 +35,7 @@ export const fetchTodos = () => (dispatch) => {
 export const addTodo = (prevTodosList = [], newTodo) => {
   const id = uuid().toString();
   const todoObj = {
-    key: id,
+    id,
     name: newTodo,
     completed: false
   };
@@ -55,38 +47,36 @@ export const addTodo = (prevTodosList = [], newTodo) => {
     ];
   };
 
-  return setStorage('todosList', newTodosList(), addTodoSuccess(todoObj));
+  return setStorage('todosList', newTodosList(), dispatchUpdateSuccess('ADD_TODO_SUCCESS', todoObj));
 }
 
-export const editTodo = (prevTodosList, todoKey, name) => {
+export const editTodo = (prevTodosList, todoObj) => {
   const newTodosList = prevTodosList.map((todo) => {
-    if (todo.key !== todoKey) return todo;
-
+    if (todo.id !== todoObj.id) return todo;
     return {
-      ...todo,
-      name
+      ...todoObj
     }
   })
 
-  return setStorage('todosList', newTodosList, editTodoSuccess(todoKey, name));
+  return setStorage('todosList', newTodosList, dispatchUpdateSuccess('EDIT_TODO_SUCCESS', todoObj));
 }
 
-export const deleteTodo = (prevTodosList, todoKey) => {
+export const deleteTodo = (prevTodosList, todoObj) => {
   const newTodosList = prevTodosList.filter((item) => {
-    return item.key !== todoKey
+    return item.id !== todoObj.id
   })
 
-  return setStorage('todosList', newTodosList, removeTodoSuccess(todoKey));
+  return setStorage('todosList', newTodosList, dispatchUpdateSuccess('REMOVE_TODO_SUCCESS', todoObj));
 }
 
 export const completeTodo = (id) => (
   type: actions.MARK_TODO_COMPLETE,
-  key: id
+  id
 )
 
 export const incompleteTodo = (id) => (
   type: actions.MARK_TODO_INCOMPLETE,
-  key: id
+  id
 )
 
 const setStorage = (name, list, successFunc) => (dispatch) => {

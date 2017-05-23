@@ -34,7 +34,6 @@ class Row extends React.Component {
 
   render() {
     const { complete } = this.props;
-    console.log("row this.props %o", this);
 
     const textComponent = (
       <TouchableOpacity style={styles.textWrap} onLongPress={() => this.isEditing(true)}>

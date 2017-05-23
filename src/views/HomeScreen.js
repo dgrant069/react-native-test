@@ -35,14 +35,7 @@ class HomeScreen extends React.Component {
     return this.props.dispatch(fetchTodos());
   }
 
-  // setSource(items, itemsDatasource, otherState = {}) {
-  //   this.setState({
-  //     items,
-  //     dataSource: this.state.dataSource.cloneWithRows(itemsDatasource),
-  //     ...otherState
-  //   })
-  //   AsyncStorage.setItem("items", JSON.stringify(items));
-  // }
+  // setSource(items, itemsDatasource, otherState = {})
 
   handleClearComplete() {
     const newItems = filterItems("ACTIVE", this.state.items);

@@ -11,23 +11,13 @@ import { deleteTodo, editTodo } from '../data/actions/todos';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class TodosList extends React.Component {
-  removeTodo = (key) => {
-    return this.props.dispatch(deleteTodo(this.props.todosList, key));
+  removeTodo = (todo) => {
+    return this.props.dispatch(deleteTodo(this.props.todosList, todo));
   }
 
-  handleUpdateText = (key, name) => {
-    return this.props.dispatch(editTodo(this.props.todosList, key, name));
-  }
-
-  handleToggleComplete = (key, complete) => {
-    // const newItems = this.state.items.map((item) => {
-    //   if (item.key !== key) return item;
-    //   return {
-    //     ...item,
-    //     complete
-    //   }
-    // })
-    // return this.props.dispatch(deleteTodo(this.props.todosList, key));
+  handleUpdates = (oldTodo, update = {}) => {
+    const updatedTodo = {...oldTodo, ...update}
+    return this.props.dispatch(editTodo(this.props.todosList, updatedTodo));
   }
 
   render(){
@@ -39,14 +29,14 @@ class TodosList extends React.Component {
           enableEmptySections
           dataSource={ds.cloneWithRows(this.props.todosList)}
           onScroll={() => Keyboard.dismiss()}
-          renderRow={({ key, ...value }) => {
+          renderRow={(todo) => {
             return (
               <Row
-                todoId={key}
-                onUpdateSave={(name) => this.handleUpdateText(key, name)}
-                onComplete={(complete) => this.handleToggleComplete(key, complete)}
-                removeTodo={() => this.removeTodo(key)}
-                {...value}
+                todoId={todo.id}
+                onUpdateSave={(name) => this.handleUpdates(todo, {name})}
+                onComplete={(complete) => this.handleUpdates(todo, {complete})}
+                removeTodo={() => this.removeTodo(todo)}
+                {...todo}
               />
             )
           }}
@@ -58,6 +48,17 @@ class TodosList extends React.Component {
     )
   }
 }
+// renderRow={({ id, ...value }) => {
+//   return (
+//     <Row
+//       todoId={id}
+//       onUpdateSave={(name) => this.handleUpdateText(id, name)}
+//       onComplete={(complete) => this.handleToggleComplete(id, complete)}
+//       removeTodo={() => this.removeTodo(id)}
+//       {...value}
+//     />
+//   )
+// }}
 
 const styles = StyleSheet.create(css);
 export default connect()(TodosList);

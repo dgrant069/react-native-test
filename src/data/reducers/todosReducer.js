@@ -14,16 +14,13 @@ export const todosReducer = (state = [], action) => {
       ];
     case 'EDIT_TODO_SUCCESS':
       const newListStateEdit = state.map((todo) => {
-        if (todo.key !== action.todoKey) return todo;
-        return {
-          ...todo,
-          name: action.todoName
-        }
+        if (todo.id !== action.todoObj.id) return todo;
+        return {...action.todoObj}
       })
       return newListStateEdit;
     case 'REMOVE_TODO_SUCCESS':
       const newListStateRemove = state.filter((todo) => {
-        return todo.key !== action.todoKey
+        return todo.id !== action.todoObj.id
       })
       return newListStateRemove;
     case action.MARK_TODO_COMPLETE:
