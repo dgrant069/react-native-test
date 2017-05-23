@@ -53,17 +53,6 @@ class HomeScreen extends React.Component {
     // this.setSource(this.state.items, filterItems(filter, this.state.items), { filter })
   }
 
-  handleToggleComplete(key, complete) {
-    const newItems = this.state.items.map((item) => {
-      if (item.key !== key) return item;
-      return {
-        ...item,
-        complete
-      }
-    })
-    // this.setSource(newItems, filterItems(this.state.filter, newItems));
-  }
-
   render() {
     const { navigate } = this.props.navigation;
     console.log("this.props in homescreen", this.props);
