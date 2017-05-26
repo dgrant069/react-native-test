@@ -21,12 +21,7 @@ class Row extends React.Component {
   }
 
   handleChange = (name) => {
-
     return this.setState({name});
-  }
-
-  handleChange2 = (text) => {
-    return this.setState({name: text});
   }
 
   isEditing = (bool) => {
