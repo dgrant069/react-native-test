@@ -8,9 +8,18 @@
   },
   "dependencies": {
     "expo": "^16.0.0",
+    "lodash": "^4.17.4",
     "react": "16.0.0-alpha.6",
     "react-native": "0.43.4",
-    "react-navigation": "^1.0.0-beta.9"
+    "react-native-vector-icons": "^4.1.1",
+    "react-navigation": "^1.0.0-beta.9",
+    "react-redux": "^5.0.4",
+    "react-router": "^4.1.1",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.6.0",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.2.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -21,7 +30,9 @@
     "babel-preset-react-native": "1.9.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "jest": "19.0.2",
-    "react-test-renderer": "16.0.0-alpha.6"
+    "react-test-renderer": "16.0.0-alpha.6",
+    "redux-logger": "^3.0.1",
+    "remote-redux-devtools": "^0.5.10"
   },
   "jest": {
     "preset": "react-native"
