@@ -26,7 +26,7 @@ export default {
     color: "#4d4d4d",
     fontSize: 20
   },
-  complete: {
+  completed: {
     textDecorationLine: "line-through"
   },
   name: {

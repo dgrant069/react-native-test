@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export const todosReducer = (state = [], action) => {
   switch (action.type) {
     case 'FECTH_TODOLIST_SUCCESS':
@@ -23,30 +21,8 @@ export const todosReducer = (state = [], action) => {
         return todo.id !== action.todoObj.id
       })
       return newListStateRemove;
-    case action.MARK_TODO_COMPLETE:
-      var index = _.findIndex(state, (todo) => todo.id === action.id);
-      if (index === -1) {
-        return state;
-      }
-      return [
-        ...state.slice(0, index),
-        Object.assign({}, state[index], {
-          completed: true
-        }),
-        ...state.slice(index + 1)
-      ];
-    case action.MARK_TODO_INCOMPLETE:
-      var index = _.findIndex(state, (todo) => todo.id === action.id);
-      if (index === -1) {
-        return state;
-      }
-      return [
-        ...state.slice(0, index),
-        Object.assign({}, state[index], {
-          completed: false
-        }),
-        ...state.slice(index + 1)
-      ];
+    case action.REMOVE_ALL_COMPLETED:
+      return state;
     default:
       return state;
   }

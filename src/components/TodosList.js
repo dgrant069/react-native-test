@@ -20,21 +20,34 @@ class TodosList extends React.Component {
     return this.props.dispatch(editTodo(this.props.todosList, updatedTodo));
   }
 
+  filteredTodosList = () => {
+    if(this.props.filterType === "ALL") return this.props.todosList;
+    const isCompleted = () => {
+      if(this.props.filterType === "ACTIVE") return false;
+      return true;
+    }
+
+    const filteredList = this.props.todosList.filter((todo) => {
+      return todo.completed === isCompleted();
+    });
+
+    return filteredList;
+  }
+
   render(){
-    console.log("the todosList %o", this.props.todosList);
     return (
       <View style={styles.content}>
         <ListView
           style={styles.list}
           enableEmptySections
-          dataSource={ds.cloneWithRows(this.props.todosList)}
+          dataSource={ds.cloneWithRows(this.filteredTodosList())}
           onScroll={() => Keyboard.dismiss()}
           renderRow={(todo) => {
             return (
               <Row
                 todoId={todo.id}
                 onUpdateSave={(name) => this.handleUpdates(todo, {name})}
-                onComplete={(complete) => this.handleUpdates(todo, {complete})}
+                onComplete={(completed) => this.handleUpdates(todo, {completed})}
                 removeTodo={() => this.removeTodo(todo)}
                 {...todo}
               />
@@ -48,17 +61,19 @@ class TodosList extends React.Component {
     )
   }
 }
-// renderRow={({ id, ...value }) => {
-//   return (
-//     <Row
-//       todoId={id}
-//       onUpdateSave={(name) => this.handleUpdateText(id, name)}
-//       onComplete={(complete) => this.handleToggleComplete(id, complete)}
-//       removeTodo={() => this.removeTodo(id)}
-//       {...value}
-//     />
-//   )
-// }}
+
+TodosList.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  todosList: PropTypes.array.isRequired,
+  filterType: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    todosList: state.todosList,
+    filterType: state.filters.filterType,
+  }
+};
 
 const styles = StyleSheet.create(css);
-export default connect()(TodosList);
+export default connect(mapStateToProps)(TodosList);

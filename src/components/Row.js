@@ -6,7 +6,6 @@ import css from './Row.css';
 
 import { deleteTodo } from '../data/actions/todos';
 
-// const Row = () => {
 class Row extends React.Component {
   state = {
     name: "",
@@ -14,17 +13,24 @@ class Row extends React.Component {
   }
 
   componentWillMount() {
-    return this.setState({name: this.props.name})
+    return this.setState({name: this.props.name});
   }
 
-  handleChange(name) {
+  componentWillReceiveProps(nextProps) {
+    return this.setState({name: nextProps.name});
+  }
+
+  handleChange = (name) => {
+
     return this.setState({name});
   }
 
+  handleChange2 = (text) => {
+    return this.setState({name: text});
+  }
+
   isEditing = (bool) => {
-    return this.setState({
-      editing: bool
-    })
+    return this.setState({editing: bool});
   }
 
   saveUpdatedName = () => {
@@ -33,11 +39,11 @@ class Row extends React.Component {
   }
 
   render() {
-    const { complete } = this.props;
+    const { completed, name } = this.props;
 
     const textComponent = (
       <TouchableOpacity style={styles.textWrap} onLongPress={() => this.isEditing(true)}>
-        <Text style={[styles.name, complete && styles.complete]}>{this.props.name}</Text>
+        <Text style={[styles.name, completed && styles.completed]}>{this.state.name}</Text>
       </TouchableOpacity>
     )
 
@@ -68,7 +74,7 @@ class Row extends React.Component {
     return (
       <View style={styles.container}>
         <Switch
-          value={complete}
+          value={completed}
           onValueChange={this.props.onComplete}
         />
         {this.state.editing ? editingComponent : textComponent}

@@ -47,8 +47,15 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  todosList: PropTypes.array.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    todosList: state.todosList
+  }
 };
 
 const styles = StyleSheet.create(css);
-export default connect()(Header);
+export default connect(mapStateToProps)(Header);

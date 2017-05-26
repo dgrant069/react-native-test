@@ -3,21 +3,6 @@ import uuid from 'uuid/v4';
 
 import { fetchFromStorage, saveToStorage } from '../api/localStorage';
 
-const throwError = (error) => {
-  console.error("EEEERRRRROOOOOOORRRRR", error);
-}
-
-const fetchTodosSuccess = (todosData) => {
-  if(!todosData) {
-    return {type: actions.FECTH_TODOLIST_SUCCESS, todosList: []};
-  }
-  return {type: actions.FECTH_TODOLIST_SUCCESS, todosList: todosData};
-};
-
-const dispatchUpdateSuccess = (sucessAction, todoObj) => {
-  return {type: actions[sucessAction], todoObj}
-}
-
 export const fetchTodos = () => (dispatch) => {
   // make async call to api, handle promise, dispatch action when promise is resolved
   return fetchFromStorage('todosList').then(todosData => {
@@ -30,6 +15,13 @@ export const fetchTodos = () => (dispatch) => {
   }).catch(e => {
     dispatch(throwError(e));
   });
+};
+
+const fetchTodosSuccess = (todosData) => {
+  if(!todosData) {
+    return {type: actions.FECTH_TODOLIST_SUCCESS, todosList: []};
+  }
+  return {type: actions.FECTH_TODOLIST_SUCCESS, todosList: todosData};
 };
 
 export const addTodo = (prevTodosList = [], newTodo) => {
@@ -50,6 +42,7 @@ export const addTodo = (prevTodosList = [], newTodo) => {
   return setStorage('todosList', newTodosList(), dispatchUpdateSuccess('ADD_TODO_SUCCESS', todoObj));
 }
 
+// Edit is for any changes such as completeness or naming, etc
 export const editTodo = (prevTodosList, todoObj) => {
   const newTodosList = prevTodosList.map((todo) => {
     if (todo.id !== todoObj.id) return todo;
@@ -63,7 +56,7 @@ export const editTodo = (prevTodosList, todoObj) => {
 
 export const deleteTodo = (prevTodosList, todoObj) => {
   const newTodosList = prevTodosList.filter((item) => {
-    return item.id !== todoObj.id
+    return item.id !== todoObj.id;
   })
 
   return setStorage('todosList', newTodosList, dispatchUpdateSuccess('REMOVE_TODO_SUCCESS', todoObj));
@@ -79,10 +72,19 @@ export const incompleteTodo = (id) => (
   id
 )
 
+// Helper functions
 const setStorage = (name, list, successFunc) => (dispatch) => {
   return saveToStorage(name, list).then(() => {
     dispatch(successFunc);
   }).catch(e => {
     dispatch(throwError(e));
   });
+}
+
+const dispatchUpdateSuccess = (sucessAction, todoObj) => {
+  return {type: actions[sucessAction], todoObj}
+}
+
+const throwError = (error) => {
+  console.error("EEEERRRRROOOOOOORRRRR", error);
 }
