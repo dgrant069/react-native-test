@@ -39,7 +39,7 @@ export const addTodo = (prevTodosList = [], newTodo) => {
     ];
   };
 
-  return setStorage('todosList', newTodosList(), dispatchUpdateSuccess('ADD_TODO_SUCCESS', todoObj));
+  return setStorage('todosList', newTodosList(), dispatchUpdateSuccess('ADD_TODO_SUCCESS', newTodosList()));
 }
 
 // Edit is for any changes such as completeness or naming, etc
@@ -51,26 +51,24 @@ export const editTodo = (prevTodosList, todoObj) => {
     }
   })
 
-  return setStorage('todosList', newTodosList, dispatchUpdateSuccess('EDIT_TODO_SUCCESS', todoObj));
+  return setStorage('todosList', newTodosList, dispatchUpdateSuccess('EDIT_TODO_SUCCESS', newTodosList));
 }
 
 export const deleteTodo = (prevTodosList, todoObj) => {
-  const newTodosList = prevTodosList.filter((item) => {
-    return item.id !== todoObj.id;
+  const newTodosList = prevTodosList.filter((todo) => {
+    return todo.id !== todoObj.id;
   })
 
-  return setStorage('todosList', newTodosList, dispatchUpdateSuccess('REMOVE_TODO_SUCCESS', todoObj));
+  return setStorage('todosList', newTodosList, dispatchUpdateSuccess('REMOVE_TODO_SUCCESS', newTodosList));
 }
 
-export const completeTodo = (id) => (
-  type: actions.MARK_TODO_COMPLETE,
-  id
-)
+export const deleteAllCompleted = (prevTodosList) => {
+  const newTodosList = prevTodosList.filter((todo) => {
+    return !todo.completed;
+  })
 
-export const incompleteTodo = (id) => (
-  type: actions.MARK_TODO_INCOMPLETE,
-  id
-)
+  return setStorage('todosList', newTodosList, dispatchUpdateSuccess('REMOVE_ALL_COMPLETED_SUCCESS', newTodosList));
+}
 
 // Helper functions
 const setStorage = (name, list, successFunc) => (dispatch) => {
@@ -81,8 +79,8 @@ const setStorage = (name, list, successFunc) => (dispatch) => {
   });
 }
 
-const dispatchUpdateSuccess = (sucessAction, todoObj) => {
-  return {type: actions[sucessAction], todoObj}
+const dispatchUpdateSuccess = (sucessAction, todosList) => {
+  return {type: actions[sucessAction], todosList}
 }
 
 const throwError = (error) => {
