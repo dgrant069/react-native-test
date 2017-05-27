@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import css from './Footer.css';
 
 import { filterUpdate } from '../data/actions/filters';
+import { deleteAllCompleted } from '../data/actions/todos';
 
 class Footer extends Component {
   state = {
@@ -12,8 +13,7 @@ class Footer extends Component {
   }
 
   handleClearComplete = () => {
-    // const newItems = filterItems("ACTIVE", this.props.todosList);
-    // return this.props.dispatch(newItems, filterItems(this.state.filter, newItems));
+    return this.props.dispatch(deleteAllCompleted(this.props.todosList));
   }
 
   handleFilter = (filterType) => {
