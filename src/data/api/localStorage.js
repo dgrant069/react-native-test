@@ -12,6 +12,6 @@ export const fetchFromStorage = (type) => {
   });
 };
 
-export const saveToStorage = (type, todos) => {
-  return AsyncStorage.setItem(type, JSON.stringify(todos));
+export const saveToStorage = (type, gifts) => {
+  return AsyncStorage.setItem(type, JSON.stringify(gifts));
 }

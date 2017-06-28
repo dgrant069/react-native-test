@@ -1,7 +1,7 @@
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
 import HomeScreen from '../views/HomeScreen';
-import ChatScreen from '../views/ChatScreen';
+import GiftScreen from '../views/GiftScreen';
 
 export const AppNavigator = StackNavigator({
   Home: {
@@ -11,5 +11,11 @@ export const AppNavigator = StackNavigator({
       headerTitle: 'Dashboard',
     }
   },
-  Chat: { screen: ChatScreen },
+  Gift: {
+    screen: GiftScreen,
+    path: 'gift/:id',
+    navigationOptions: {
+      headerTitle: 'Gift',
+    }
+  },
 });

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { View, StyleSheet, TextInput, Button } from "react-native";
 import { connect } from 'react-redux';
 
-import { addTodo } from '../data/actions/todos';
+import { addGift } from '../../data/actions/gifts';
 
 import css from './Header.css';
 
@@ -11,12 +11,12 @@ class Header extends React.Component {
     value: ""
   }
 
-  handleAddItem(todoName) {
+  handleAddItem(giftName) {
     this.setState({
       value: ""
     })
 
-    return this.props.dispatch(addTodo(this.props.todosList, todoName));
+    return this.props.dispatch(addGift(this.props.giftsList, giftName));
   }
 
   handleChange(value) {
@@ -48,12 +48,12 @@ class Header extends React.Component {
 
 Header.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  todosList: PropTypes.array.isRequired,
+  giftsList: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => {
   return {
-    todosList: state.todosList
+    giftsList: state.giftsList
   }
 };
 

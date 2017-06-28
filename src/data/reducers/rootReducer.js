@@ -1,11 +1,11 @@
 import {combineReducers} from 'redux';
 import {routerReducer} from './routerReducer';
-import {todosReducer} from './todosReducer';
+import {giftsReducer} from './giftsReducer';
 import {filterReducer} from './filterReducer';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
-  todosList: todosReducer,
+  giftsList: giftsReducer,
   filters: filterReducer,
 });
 

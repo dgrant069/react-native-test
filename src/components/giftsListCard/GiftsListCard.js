@@ -1,12 +1,11 @@
 import React, { PropTypes } from "react";
 import { View, Text, StyleSheet, Switch, TouchableOpacity, TextInput } from "react-native";
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 
-import css from './Row.css';
+import css from './GiftsListCard.css';
 
-import { deleteTodo } from '../data/actions/todos';
-
-class Row extends React.Component {
+class GiftsListCard extends React.Component {
   state = {
     name: "",
     editing: false
@@ -33,17 +32,30 @@ class Row extends React.Component {
     this.isEditing(false);
   }
 
+  navigateAction = () => {
+    return NavigationActions.navigate({
+      routeName: 'Gift',
+      params: {
+        id: this.props.id,
+        editState: 'NEW',
+      },
+    })
+  }
+
   render() {
     const { completed, name } = this.props;
 
     const textComponent = (
-      <TouchableOpacity style={styles.textWrap} onLongPress={() => this.isEditing(true)}>
+      <TouchableOpacity
+        style={styles.textWrap}
+        onPress={() => this.props.dispatch(this.navigateAction())}
+        onLongPress={() => this.isEditing(true)}>
         <Text style={[styles.name, completed && styles.completed]}>{this.state.name}</Text>
       </TouchableOpacity>
     )
 
     const removeButton = (
-      <TouchableOpacity onPress={this.props.removeTodo}>
+      <TouchableOpacity onPress={this.props.removeGift}>
         <Text style={styles.destroy}>X</Text>
       </TouchableOpacity>
     )
@@ -79,5 +91,9 @@ class Row extends React.Component {
   }
 }
 
+GiftsListCard.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
 const styles = StyleSheet.create(css);
-export default Row;
+export default connect()(GiftsListCard)

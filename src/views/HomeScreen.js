@@ -1,15 +1,15 @@
 import React, { PropTypes } from "react";
 import { View, Text, StyleSheet, ActivityIndicator, Platform, ListView, Keyboard, AsyncStorage, Button } from "react-native";
 import { connect } from 'react-redux'
+import { addNavigationHelpers } from 'react-navigation'
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Row from "../components/Row";
-import TodosList from "../components/TodosList";
+import Header from "../components/header/Header";
+import Footer from "../components/footer/Footer";
+import GiftsList from "../components/giftsList/GiftsList";
 
 import css from './HomeScreen.css';
 
-import { fetchTodos } from '../data/actions/todos';
+import { fetchGifts } from '../data/actions/gifts';
 
 class HomeScreen extends React.Component {
   state = {
@@ -20,29 +20,12 @@ class HomeScreen extends React.Component {
     this.setState({
       loading: false
     })
-    return this.props.dispatch(fetchTodos());
+    return this.props.dispatch(fetchGifts());
   }
-
-  // setSource(items, itemsDatasource, otherState = {}) {
-  //   this.setState({
-  //     items,
-  //     dataSource: this.state.dataSource.cloneWithRows(itemsDatasource),
-  //     ...otherState
-  //   })
-  //   AsyncStorage.setItem("items", JSON.stringify(items));
-  // }
-
-  // handleToggleAllComplete() {
-  //   const complete = !this.state.allComplete;
-  //   const newItems = this.state.items.map((item) => ({
-  //     ...item,
-  //     complete
-  //   }))
-  //   this.setSource(newItems, filterItems(this.state.filter, newItems), { allComplete: complete })
-  // }
 
   render() {
     const { navigate } = this.props.navigation;
+    console.log("this in HomeScreen", this);
     return (
       <View style={styles.container}>
         <Header/>
@@ -50,7 +33,7 @@ class HomeScreen extends React.Component {
           onPress={() => navigate('Chat', { user: 'Siri' })}
           title="Chat with Siri"
           style={styles.btn}/>
-        <TodosList/>
+        <GiftsList/>
         <Footer/>
         {
           this.state.loading &&
@@ -64,6 +47,10 @@ class HomeScreen extends React.Component {
     );
   }
 }
+
+HomeScreen.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
 const styles = StyleSheet.create(css);
 export default connect()(HomeScreen);

@@ -1,6 +1,6 @@
 import { AsyncStorage } from "react-native";
 
-export const getTodoList = () => {
+export const getGiftList = () => {
   AsyncStorage.getItem("items").then((json) => {
     try {
       const items = JSON.parse(json);

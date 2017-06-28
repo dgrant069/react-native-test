@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 
 import css from './Footer.css';
 
-import { filterUpdate } from '../data/actions/filters';
-import { deleteAllCompleted } from '../data/actions/todos';
+import { filterUpdate } from '../../data/actions/filters';
+import { deleteAllCompleted } from '../../data/actions/gifts';
 
 class Footer extends Component {
   state = {
@@ -13,7 +13,7 @@ class Footer extends Component {
   }
 
   handleClearComplete = () => {
-    return this.props.dispatch(deleteAllCompleted(this.props.todosList));
+    return this.props.dispatch(deleteAllCompleted(this.props.giftsList));
   }
 
   handleFilter = (filterType) => {
@@ -24,7 +24,7 @@ class Footer extends Component {
     return (
       <View style={styles.container}>
         <View>
-          <Text>{this.props.todosList.length} count</Text>
+          <Text>{this.props.giftsList.length} count</Text>
         </View>
         <View style={styles.filters}>
           <TouchableOpacity style={[styles.filter, this.props.filterType === "ALL" && styles.selected]} onPress={() => this.handleFilter("ALL")}>
@@ -46,7 +46,7 @@ class Footer extends Component {
 }
 
 /* <Footer
-  todosList={this.props.todosList}
+  giftsList={this.props.giftsList}
   onFilter={this.handleFilter}
   filter={this.state.filter}
   onClearComplete={this.handleClearComplete}
@@ -54,13 +54,13 @@ class Footer extends Component {
 
 Footer.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  todosList: PropTypes.array.isRequired,
+  giftsList: PropTypes.array.isRequired,
   filterType: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    todosList: state.todosList,
+    giftsList: state.giftsList,
     filterType: state.filters.filterType,
   }
 };
