@@ -37,7 +37,7 @@ class GiftsListCard extends React.Component {
       routeName: 'Gift',
       params: {
         id: this.props.id,
-        editState: 'NEW',
+        isEditingGift: false,
       },
     })
   }

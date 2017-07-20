@@ -6,7 +6,7 @@ import GiftsListCard from "../giftsListCard/GiftsListCard";
 
 import css from './GiftsList.css';
 
-import { deleteGift, editGift } from '../../data/actions/gifts';
+import { deleteGift, quickEditGift } from '../../data/actions/gifts';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -17,7 +17,7 @@ class GiftsList extends React.Component {
 
   handleUpdates = (oldGift, update = {}) => {
     const updatedGift = {...oldGift, ...update}
-    return this.props.dispatch(editGift(this.props.giftsList, updatedGift));
+    return this.props.dispatch(quickEditGift(this.props.giftsList, updatedGift));
   }
 
   filteredGiftsList = () => {

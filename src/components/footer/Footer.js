@@ -23,9 +23,6 @@ class Footer extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          <Text>{this.props.giftsList.length} count</Text>
-        </View>
         <View style={styles.filters}>
           <TouchableOpacity style={[styles.filter, this.props.filterType === "ALL" && styles.selected]} onPress={() => this.handleFilter("ALL")}>
             <Text>All</Text>
@@ -44,13 +41,6 @@ class Footer extends Component {
     );
   }
 }
-
-/* <Footer
-  giftsList={this.props.giftsList}
-  onFilter={this.handleFilter}
-  filter={this.state.filter}
-  onClearComplete={this.handleClearComplete}
-/> */
 
 Footer.propTypes = {
   dispatch: PropTypes.func.isRequired,

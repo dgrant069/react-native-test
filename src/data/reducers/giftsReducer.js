@@ -1,5 +1,7 @@
 export const giftsReducer = (state = [], action) => {
-  if(action.giftsList){
+  console.log("giftsReducer action", action);
+  //return the list of gifts
+  if(action.giftsList) {
     return action.giftsList;
   }
 
