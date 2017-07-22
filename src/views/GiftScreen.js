@@ -11,13 +11,13 @@ import { toggleGiftScreenEditBtn } from '../data/actions/ui';
 class GiftScreen extends React.Component {
   state = {
     isEditing: false,
-    originalGift: {},
-    updatedGift: {},
+    origGift: {},
+    finalGift: {},
   }
 
   componentWillMount() {
     const giftObj = this.getGiftObj();
-    return this.setState({originalGift: giftObj});
+    return this.setState({origGift: giftObj});
   }
 
   getGiftObj = () => {
@@ -32,27 +32,20 @@ class GiftScreen extends React.Component {
     const nav = this.props.navigation;
     const navState = nav.state;
     const navSetParams = nav.setParams;
-
-    const EDITING = 'EDITING';
-    const DONE = 'DONE';
-
     const isEditing = navState.params.isEditingGift;
-
-    console.log("isEditing???", isEditing);
 
     if(isEditing) {
       //If no errors
-      console.log("MEEEEEE")
 
-      //   dispatch(fullEditGift(self.props.giftsList, self.state.updatedGift)),
-      nav.dispatch(navSetParams({ isEditingGift: false }));
+      navSetParams({ isEditingGift: false });
       this.setState({ isEditing: false });
-
+      return this.handleUpdates();
     }
 
     if(!isEditing) {
-      nav.dispatch(navSetParams({ isEditingGift: true }));
+      navSetParams({ isEditingGift: true });
       this.setState({ isEditing: true });
+      return;
     }
   }
 
@@ -63,45 +56,12 @@ class GiftScreen extends React.Component {
     console.log("this.props.navigation", this.props.navigation);
     console.groupEnd();
 
-
-    // handleUpdates = (oldGift, update = {}) => {
-    //   console.log("getting called");
-    //   const updatedGift = {...oldGift, ...update}
-    //   this.setState({originalGift: updatedGift});
-    //   return this.props.dispatch(quickEditGift(this.props.giftsList, updatedGift));
-    // }
-
-    const handleButtonPress = () => {
-      if(isEditing) {
-        //If no errors
-        return (
-          navDispatch(fullEditGift(this.props.giftsList, this.state.updatedGift)),
-          navSetParams({ editState: 'DONE' })
-        )
-      }
-
-      if(!isEditing) {
-        return navSetParams({ editState: 'EDITING' });
-      }
-    }
-
-    const setParamsAction = NavigationActions.setParams({
-      editState: 'EDITING',
-    });
-
-    // return (
-    //   this.props.dispatch(toggleGiftScreenEditBtn("Save")),
-    //   this.props.dispatch(quickEditGift(this.props.giftsList, {}))
-    // )
-    // const updatedGift = {...oldGift, ...updates}
-    // this.setState({originalGift: updatedGift});
-    // return this.props.dispatch(quickEditGift(this.props.giftsList, updatedGift));
+    return this.props.dispatch(fullEditGift(this.state.origGift, this.state.finalGift))
   }
 
   render() {
     const giftObj = this.getGiftObj();
-    console.log("this.props.navigation.state.params.isEditingGift %o", this.props.navigation.state.params.isEditingGift);
-    console.log("this.props.navigation", this.props.navigation);
+    console.log("giftObj", giftObj)
 
     const editToggleButton = (
       <Button

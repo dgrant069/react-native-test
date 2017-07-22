@@ -38,15 +38,28 @@ export const addGift = (prevGiftsList = [], newGift) => {
 }
 
 // New edit function for full edit
-export const fullEditGift = () => {
-  const newGiftsList = prevGiftsList.map((gift) => {
-    if (gift.id !== giftObj.id) return gift;
-    return {
-      ...giftObj
-    }
-  })
+// Partial (or fast) edit to come later
+export const fullEditGift = (origGift, finalGift) => (dispatch) => {
+  console.log("gift edit action", origGift, finalGift)
 
-  return setStorage('giftsList', newGiftsList, dispatchUpdateSuccess('EDIT_TODO_SUCCESS', newGiftsList));
+  return fetchFromStorage('giftsList').then(giftsData => {
+    try {
+      const items = JSON.parse(giftsData);
+      const newGiftsList = items.map((gift) => {
+        if (gift.id !== origGift.id) return gift;
+        console.log("gift", gift)
+        return {
+          ...finalGift
+        }
+      })
+
+      return setStorage('giftsList', newGiftsList, dispatchUpdateSuccess('EDIT_TODO_SUCCESS', newGiftsList));
+    } catch(e) {
+      return dispatch(throwError(e));
+    }
+  }).catch(e => {
+    return dispatch(throwError(e));
+  });
 }
 
 // Edit is for any changes such as completeness or naming, etc
