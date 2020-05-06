@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "dependencies": {
     "expo": "^16.0.0",
@@ -19,7 +21,8 @@
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
-    "uuid": "^3.0.1"
+    "uuid": "^3.0.1",
+    "snyk": "^1.319.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -36,5 +39,6 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "snyk": true
 }
